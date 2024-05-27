@@ -1,79 +1,78 @@
 
-<body>
-
-    <h1 class="title-with-line"> Afric news</h1>
+<div   class="body">
+  <div  class="first">
+    <h1 class="title-with-line">First</h1>
     <div class="wrapper-container">
-    <div class="wrapper">
+      <div *ngFor="let post of getFirstByType('trend')" class="wrapper trend">
         <div class="container">
-            <div class="frame">
-                <img src="assets/img/job1.jpg" alt="Image 1">
-            </div>
+          <div class="frame">
+            <a [routerLink]="['/post', post.id]">
+              <img class="post-image-first" [src]="post.processedImg" alt="post-image">
+            </a>
+          </div>
         </div>
         <div class="title">
-            <h3  nzType="link" routerLink="/nouvelle" routerLinkActive="active">Titre</h3>
+          <h3 nzType="link" routerLink="/nouvelle" routerLinkActive="active">{{ post.name }}</h3>
+          <p>Posted by: {{ post.postedBy }} on {{ post.date | date }}</p>
         </div>
+      </div>
     </div>
-
-    <div class="wrapper">
+  </div>
+  
+  <div style="background-color: white; margin-top: 50px;" class="trend">
+    <h1 class="title-with-line">Trend</h1>
+    <div class="wrapper-container">
+      <div *ngFor="let post of getFirstThreePostsByType('trend')" class="wrapper trend-item">
         <div class="container">
-            <div class="frame">
-                <img src="assets/img/job1.jpg" alt="Image 1">
-            </div>
+          <div class="frame">
+            <a [routerLink]="['/post', post.id]">
+              <img class="post-image-trend" [src]="post.processedImg" alt="post-image">
+            </a>
+          </div>
         </div>
         <div class="title">
-            <h3>Title 1</h3>
+          <h3 nzType="link" routerLink="/nouvelle" routerLinkActive="active">{{ post.name }}</h3>
+          <p>Posted by: {{ post.postedBy }} on {{ post.date | date }}</p>
         </div>
+      </div>
     </div>
-    
-    <div class="wrapper">
+  </div>
+  
+  <div style="background-color: white; margin-top: 50px;"  class="latest">
+    <h1 class="title-with-line">Latest</h1>
+    <div class="wrapper-container">
+      <div *ngFor="let post of getFirstTwoPostsByType('latest')" class="wrapper latest-item">
         <div class="container">
-            <div class="frame">
-                <img src="assets/img/job1.jpg" alt="Image 1">
-            </div>
+          <div class="frame">
+            <a [routerLink]="['/post', post.id]">
+              <img class="post-image-latest" [src]="post.processedImg" alt="post-image">
+            </a>
+          </div>
         </div>
         <div class="title">
-            <h3>Title 1</h3>
+          <h3 nzType="link" routerLink="/nouvelle" routerLinkActive="active">{{ post.name }}</h3>
+          <p>Posted by: {{ post.postedBy }} on {{ post.date | date }}</p>
         </div>
+      </div>
     </div>
-</div>
-
-
-
-
-
-<h1 class="title-with-line"> news</h1>
-<div class="wrapper-container">
-    <div class="wrapper">
+  </div>
+  <div style="width: 90%;  padding-right: 50px; align-items: center; background-color: white; margin-top: 50px;" class="reports">
+    <h1 class="title-with-line">Reports</h1>
+    <div class="wrapper-container">
+      <div *ngFor="let post of getFirstThreePostsByType('reports')" class="wrapper reports">
         <div class="container">
-            <div class="frame">
-                <img src="assets/img/job1.jpg" alt="Image 1">
-            </div>
+          <div class="image-wrapper">
+            <a [routerLink]="['/post', post.id]" class="frame">
+              <img class="post-image-reports" [src]="post.processedImg" alt="post-image">
+            </a>
+          </div>
+          <div class="content">
+            <h3 nzType="link" routerLink="/nouvelle" routerLinkActive="active">{{ post.name }}</h3>
+            <p>{{ post.content }} on {{ post.date | date }}</p>
+          </div>
         </div>
-        <div class="title">
-            <h3  nzType="link" routerLink="/maroc" routerLinkActive="active">Title 1</h3>
-        </div>
+      </div>
     </div>
-
-    <div class="wrapper">
-        <div class="container">
-            <div class="frame">
-                <img src="assets/img/job1.jpg" alt="Image 1">
-            </div>
-        </div>
-        <div class="title">
-            <h3>Title 1</h3>
-        </div>
-    </div>
-    
-    <div class="wrapper">
-        <div class="container">
-            <div class="frame">
-                <img src="assets/img/job1.jpg" alt="Image 1">
-            </div>
-        </div>
-        <div class="title">
-            <h3>Title 1</h3>
-        </div>
-    </div>
-</div>
-</body>
+  </div>
+  
+  </div>

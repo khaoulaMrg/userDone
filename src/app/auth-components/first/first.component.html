@@ -1,0 +1,14 @@
+<div class="archived-posts">
+    <h2>Archived Posts</h2>
+    <div *ngFor="let post of archivedPosts" class="post">
+      <a [routerLink]="['/post', post.id]">
+        <img [src]="post.processedImg" alt="post-image">
+      </a>
+      <div class="post-details">
+        <h3>{{ post.name }}</h3>
+        <p>Posted by: {{ post.postedBy }} on {{ post.date | date }}</p>
+        <p>{{ post.content }}</p>
+      </div>
+    </div>
+  </div>
+  

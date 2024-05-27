@@ -1,7 +1,13 @@
 export interface Post {
+  typeName: string;
+processedImg: any;
+    type: string;
+    byteImg(byteImg: any): unknown;
     id: number;
     name: string;
     content: string;
+    text: string;
+
     postedBy: string;
     date: Date;
     categoryId: number; // Changez le type si nécessaire
@@ -9,5 +15,6 @@ export interface Post {
     picPath: string;
     approved: boolean;
     posted: boolean;
+    archived: boolean;
   }
   

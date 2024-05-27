@@ -13,22 +13,22 @@ import {MatDivider} from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import {  HttpClientModule } from '@angular/common/http';
 import { MarocComponent } from './auth-components/maroc/maroc.component';
-import { NouvelleComponent } from './auth-components/nouvelle/nouvelle.component';
 import { RouterModule } from '@angular/router';
 import { AfriqueComponent } from './auth-components/afrique/afrique.component';
 import { EuropeComponent } from './auth-components/europe/europe.component';
 import { AsieComponent } from './auth-components/asie/asie.component';
 import { AmeriqueComponent } from './auth-components/amerique/amerique.component';
 import { LatestComponent } from './auth-components/latest/latest.component';
+import { PostDetailComponent } from './post-detail/post-detail.component';
+import { FirstComponent } from './auth-components/first/first.component';
 @NgModule({
   declarations: [
     AppComponent,
     MarocComponent,
-    NouvelleComponent,
     AfriqueComponent,
     EuropeComponent,
     AsieComponent,
-    AmeriqueComponent,LatestComponent
+    AmeriqueComponent,LatestComponent, PostDetailComponent,FirstComponent
   ],
   imports: [
     BrowserModule,

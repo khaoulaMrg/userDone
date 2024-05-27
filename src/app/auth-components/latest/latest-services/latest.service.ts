@@ -1,51 +1,85 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Post } from '../../../post.models';
-import { StorageService } from '../../../storage.service';
-
+import { StorageService } from '../../../auth-services/storage-service/storage.service';
 
 export interface PostDTO {
   id: number;
   name: string;
   content: string;
+  text: string;
+
   postedBy: string;
   date: Date;
   approved: boolean;
   posted: boolean;
+  archived: boolean;
   byteImg: string;
-  categoryId: number;
+  processedImg?: string; 
+  typeName: string;
+  img: string;
+  // Ajout de la propriété typeName
+  // Ajoutez cette propriété avec le '?' pour indiquer qu'elle est facultative
 }
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class LatestService {
-
-
   private SERVER_URL = "http://localhost:8081/api/customer/";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: StorageService) { }
 
-  // Ajoutez la méthode pour récupérer les catégories postées par l'admin
-  getApprovedAndPostedPosts(): Observable<Post[]> {
-    const url = `${this.SERVER_URL}approved-and-posted-posts`;
-    return this.http.get<Post[]>(url);
-  }
-  getAllCategories(): Observable<any>{
-    return this.http.get(this.SERVER_URL+ "cats",{
+  getAllCategories(): Observable<any> {
+    return this.http.get(this.SERVER_URL + "cats", {
       headers: this.createAuthorizationHeader(),
-    })
+    }).pipe(
+      catchError(this.handleError)
+    );
   }
+// latest.service.ts
 
-
-  getPostsByCategory(categoryId: number): Observable<PostDTO[]> {
-    return this.http.get<PostDTO[]>(`${this.SERVER_URL}posts/category/${categoryId}`);
-  }
-  // Ajoutez la méthode pour récupérer les catégories postées par l'admin
-
-
-private createAuthorizationHeader(): HttpHeaders {
-  return new HttpHeaders().set('Authorization', 'Bearer ' + StorageService.getToken());
+getApprovedPostsByCategory(category: string): Observable<PostDTO[]> {
+  return this.http.get<PostDTO[]>(`${this.SERVER_URL}posts/approved-by-category?category=${category}`, {
+    headers: this.createAuthorizationHeader(),
+  }).pipe(
+    catchError(this.handleError)
+  );
 }
+
+  private createAuthorizationHeader(): HttpHeaders {
+    const token = this.storageService.getToken();
+    if (token) {
+      return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    } else {
+      return new HttpHeaders();
+    }
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Server returned code: ${error.status}, error message is: ${error.message}`;
+    }
+    return throwError(errorMessage);
+  }
+  getPostById(id: number): Observable<PostDTO> {
+    return this.http.get<PostDTO>(`${this.SERVER_URL}posts/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  
+
+
+  archivePost(postId: number): Observable<void> {
+    return this.http.put<void>(`${this.SERVER_URL}/post/${postId}/archive`, {});
+  }
+  
+
 }

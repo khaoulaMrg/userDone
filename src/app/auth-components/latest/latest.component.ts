@@ -1,32 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { LatestService, PostDTO } from './latest-services/latest.service';
-import { Post } from '../../post.models';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-latest',
   templateUrl: './latest.component.html',
-  styleUrl: './latest.component.css'
+  styleUrls: ['./latest.component.css']
 })
-export class LatestComponent implements OnInit {
-
-
-  postedPosts: Post[] = [];
-  categories: any = [];
-posts: any;
+export class LatestComponent  implements OnInit{
+  latestPosts: PostDTO[] = [];
+  listOfTypes = []; // Remplir avec les types disponibles
+  listOfCategories = []; // Remplir avec les catégories disponibles
 
   constructor(private latestService: LatestService) { }
 
   ngOnInit(): void {
-    this.loadApprovedAndPostedPosts();
+    this.getLatestPosts();
   }
-  loadApprovedAndPostedPosts() {
-    this.latestService.getApprovedAndPostedPosts().subscribe({
-      next: (posts: Post[]) => {
-        this.posts = posts;
-      },
-      error: (error) => {
-        console.error('Erreur lors de la récupération des catégories :', error);
-      }
-    });
+
+  getLatestPosts(): void {
+    this.latestService.getApprovedPostsByCategory('latest')
+      .subscribe(posts => {
+        this.latestPosts = posts.map(post => ({
+          ...post,
+          processedImg: 'data:image/jpeg;base64,' + post.byteImg
+        }));
+      });
+  }
+  getFirstThreePostsByType(typeName: string): PostDTO[] {
+    return this.latestPosts.filter(post => post.typeName === typeName).slice(0, 3);
+  }
+  getFirstByType(typeName: string): PostDTO[] {
+    return this.latestPosts.filter(post => post.typeName === typeName).slice(0, 1);
+  }
+  getFirstTwoPostsByType(typeName: string): PostDTO[] {
+    return this.latestPosts.filter(post => post.typeName === typeName).slice(0, 2);
   }
 }

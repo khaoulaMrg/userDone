@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MarocComponent } from './auth-components/maroc/maroc.component';
-import { NouvelleComponent } from './auth-components/nouvelle/nouvelle.component';
 import { AfriqueComponent } from './auth-components/afrique/afrique.component';
 import { EuropeComponent } from './auth-components/europe/europe.component';
 import { AsieComponent } from './auth-components/asie/asie.component';
 import { AmeriqueComponent } from './auth-components/amerique/amerique.component';
 import { LatestComponent } from './auth-components/latest/latest.component';
+import { PostDetailComponent } from './post-detail/post-detail.component';
+import { FirstComponent } from './auth-components/first/first.component';
 
 const routes: Routes = [
   {path:'',component:MarocComponent},
@@ -17,8 +18,12 @@ const routes: Routes = [
   {path:'asie',component:AsieComponent},
   {path:'amerique',component:AmeriqueComponent},
   {path:'latest',component:LatestComponent},
+  {path:'first',component:FirstComponent},
 
-  { path: 'nouvelle/:id', component: NouvelleComponent }
+
+  { path: 'post/:id', component: PostDetailComponent },  // Route pour les détails du post
+
+
 
 ];
 

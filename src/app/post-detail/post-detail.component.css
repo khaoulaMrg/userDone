@@ -1,0 +1,40 @@
+.post-detail {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 50px; /* Center the post detail container */
+}
+
+.post-detail h1 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.post-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px; /* Space between the image and the content */
+}
+
+.post-content {
+  width: 100%;
+  text-align: center; /* Center the text content */
+}
+
+.post-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #777;
+}
