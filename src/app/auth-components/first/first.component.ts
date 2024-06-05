@@ -9,20 +9,31 @@ import { PostDTO } from '../latest/latest-services/latest.service';
 })
 export class FirstComponent implements OnInit {
   archivedPosts: PostDTO[] = [];
-
-  constructor(private firstService: FirstService) { }
+  searchCriteria = { name: '', category: '' };
+  constructor(private firstService: FirstService) {}
 
   ngOnInit(): void {
-    this.getArchivedPosts();
+    this.loadArchivedPostsByType('first');
   }
-
-  getArchivedPosts() {
-    console.log('Fetching archived posts in FirstComponent'); // Ajouter un log
-    this.firstService.getArchivedPosts().subscribe(posts => {
-      console.log('Archived posts fetched:', posts); // Ajouter un log
-      this.archivedPosts = posts;
-    }, error => {
-      console.error('Error fetching archived posts:', error);
+  searchPosts(): void {
+    const { name, category } = this.searchCriteria;
+    this.firstService.searchArchivedPosts(name, category).subscribe(archivedPosts => {
+      this.archivedPosts = archivedPosts.map(post => ({
+        ...post,
+        processedImg: this.processImage(post.byteImg ?? '')
+      }));
     });
+  }
+  loadArchivedPostsByType(type: string): void {
+    this.firstService.getArchivedPostsByType(type).subscribe(archivedPosts => {
+        this.archivedPosts = archivedPosts.map(post => ({
+            ...post,
+            processedImg: this.processImage(post.byteImg)
+        }));
+    });
+}
+
+  private processImage(base64Img: string): string {
+    return `data:image/jpeg;base64,${base64Img}`;
   }
 }

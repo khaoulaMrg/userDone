@@ -8,6 +8,9 @@ import { AmeriqueComponent } from './auth-components/amerique/amerique.component
 import { LatestComponent } from './auth-components/latest/latest.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { FirstComponent } from './auth-components/first/first.component';
+import { TrendComponent } from './auth-components/trend/trend.component';
+import { ReportsComponent } from './auth-components/reports/reports.component';
+import { MainComponent } from './auth-components/main/main.component';
 
 const routes: Routes = [
   {path:'',component:MarocComponent},
@@ -19,6 +22,13 @@ const routes: Routes = [
   {path:'amerique',component:AmeriqueComponent},
   {path:'latest',component:LatestComponent},
   {path:'first',component:FirstComponent},
+  {path:'trend',component:TrendComponent},
+  {path:'reports',component:ReportsComponent},
+  {path:'main',component:MainComponent},
+
+
+
+
 
 
   { path: 'post/:id', component: PostDetailComponent },  // Route pour les détails du post

@@ -1,35 +1,40 @@
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Post } from '../../../post.models';
 import { StorageService } from '../../../auth-services/storage-service/storage.service';
 
 export interface PostDTO {
   id: number;
+  typeName: string;
+  categoryName: string;
+
+  postedBy: string;
+  expirationDate: Date;
+  archived: boolean;
+  approved: boolean;
+  byteImg: string;
+  processedImg: string;
   name: string;
   content: string;
   text: string;
-
-  postedBy: string;
   date: Date;
-  approved: boolean;
-  posted: boolean;
-  archived: boolean;
-  byteImg: string;
-  processedImg?: string; 
-  typeName: string;
-  img: string;
-  // Ajout de la propriété typeName
-  // Ajoutez cette propriété avec le '?' pour indiquer qu'elle est facultative
+  posted: boolean; // Si c'est optionnel, utilisez ?
+  img: string;   
+  // Si c'est optionnel, utilisez ?
 }
+
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class LatestService {
+ 
   private SERVER_URL = "http://localhost:8081/api/customer/";
+  private newPostSubject = new Subject<PostDTO>();
+
 
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
@@ -74,12 +79,20 @@ getApprovedPostsByCategory(category: string): Observable<PostDTO[]> {
     );
   }
 
-  
+
+receiveNewPost(): Observable<PostDTO> {
+  return this.newPostSubject.asObservable();
+}
 
 
-  archivePost(postId: number): Observable<void> {
-    return this.http.put<void>(`${this.SERVER_URL}/post/${postId}/archive`, {});
+  archiveAndRemovePost(id: number): Observable<void> {
+    return this.http.put<void>(`${this.SERVER_URL}${id}/archive`, {});
   }
-  
-
+  getArchivedPostsByType(type: string): Observable<PostDTO[]> {
+    const url = `${this.SERVER_URL}posts/archived?type=${type}`;
+    return this.http.get<PostDTO[]>(url);
+  }
+archivePost(postId: number): Observable<void> {
+  return this.http.put<void>(`${this.SERVER_URL}posts/${postId}/archive`, {});
+}
 }

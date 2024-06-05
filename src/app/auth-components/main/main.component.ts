@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LatestService, PostDTO } from '../latest/latest-services/latest.service';
 import { Observable, Subscription, catchError, interval, of, tap } from 'rxjs';
 import { FirstService } from '../first/first-services/first.service';
@@ -6,12 +6,12 @@ import { TrendService } from '../trend/trend-services/trend.service';
 import { ReportsService } from '../reports/reports-services/reports.service';
 
 @Component({
-  selector: 'app-afrique',
-  templateUrl: './afrique.component.html',
-  styleUrl: './afrique.component.css'
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  styleUrl: './main.component.css'
 })
-export class AfriqueComponent implements OnInit, OnDestroy {
-  afriquePosts: PostDTO[] = [];
+export class MainComponent {
+  marocPosts: PostDTO[] = [];
   currentFirstPost: PostDTO | undefined;
   private refreshSubscription!: Subscription;
 
@@ -42,7 +42,7 @@ export class AfriqueComponent implements OnInit, OnDestroy {
   checkAndArchiveExpiredPosts(): void {
     const now = new Date();
 
-    this.afriquePosts.forEach(post => {
+    this.marocPosts.forEach(post => {
       if (new Date(post.expirationDate) <= now && !post.archived) {
         post.archived = true;
         this.archivePostByType(post);
@@ -92,15 +92,15 @@ export class AfriqueComponent implements OnInit, OnDestroy {
       if (this.currentFirstPost && new Date(this.currentFirstPost.expirationDate) <= now) {
         this.moveCurrentFirstPostToArchive().subscribe(() => {
           this.currentFirstPost = newPost;
-          this.afriquePosts.unshift(newPost);
+          this.marocPosts.unshift(newPost);
         });
       } else if (!this.currentFirstPost) {
         this.currentFirstPost = newPost;
-        this.afriquePosts.unshift(newPost);
+        this.marocPosts.unshift(newPost);
       }
     } else if (['trend', 'latest', 'reports'].includes(newPost.typeName)) {
       if (new Date(newPost.expirationDate) > now) {
-        this.afriquePosts.unshift(newPost);
+        this.marocPosts.unshift(newPost);
         this.checkAndArchiveExpiredPosts();
       }
     }
@@ -139,7 +139,7 @@ export class AfriqueComponent implements OnInit, OnDestroy {
   }
 
   reorderPostsByType(typeName: string, limit: number, service: any, createPlaceholder: () => PostDTO): void {
-    const posts = this.afriquePosts.filter(post => post.typeName === typeName && !post.archived && post.approved);
+    const posts = this.marocPosts.filter(post => post.typeName === typeName && !post.archived && post.approved);
   
     if (posts.length < limit) {
       while (posts.length < limit) {
@@ -155,23 +155,23 @@ export class AfriqueComponent implements OnInit, OnDestroy {
       });
     }
   
-    this.afriquePosts = [...this.afriquePosts.filter(post => post.typeName !== typeName), ...posts];
+    this.marocPosts = [...this.marocPosts.filter(post => post.typeName !== typeName), ...posts];
   }
   
 
   createPlaceholderReportsPost(): PostDTO {
-    return this.createPlaceholderPost('reports','afrique');
+    return this.createPlaceholderPost('reports');
   }
 
   createPlaceholderLatestPost(): PostDTO {
-    return this.createPlaceholderPost('latest','afrique');
+    return this.createPlaceholderPost('latest');
   }
 
   createPlaceholderTrendPost(): PostDTO {
-    return this.createPlaceholderPost('trend','afrique');
+    return this.createPlaceholderPost('trend');
   }
 
-  createPlaceholderPost(typeName: string, categoryName:string): PostDTO {
+  createPlaceholderPost(typeName: string): PostDTO {
     return {
       id: -1,
       typeName: typeName,
@@ -187,14 +187,15 @@ export class AfriqueComponent implements OnInit, OnDestroy {
       date: new Date(),
       posted: false,
       img: 'placeholder.jpg',
-      categoryName: categoryName,
+      categoryName: typeName,
+
     };
   }
 
   getMarocPosts(): void {
-    this.latestService.getApprovedPostsByCategory('afrique')
+    this.latestService.getApprovedPostsByCategory('')
       .subscribe(posts => {
-        this.afriquePosts = posts.map(post => ({
+        this.marocPosts = posts.map(post => ({
           ...post,
           processedImg: 'data:image/jpeg;base64,' + post.byteImg
         }));
@@ -205,20 +206,22 @@ export class AfriqueComponent implements OnInit, OnDestroy {
   }
 
   getFirstByType(typeName: string): PostDTO[] {
-    return this.afriquePosts.filter(post => post.typeName === typeName && !post.archived).slice(0, 1);
+    return this.marocPosts.filter(post => post.typeName === typeName && !post.archived).slice(0, 1);
   }
 
 
 
   getFirstThreePostsByType(typeName: string): PostDTO[] {
-    return this.afriquePosts.filter(post => post.typeName === typeName && !post.archived).slice(0, 3);
+    return this.marocPosts.filter(post => post.typeName === typeName && !post.archived).slice(0, 3);
   }
 
   getFirstTwoPostsByType(typeName: string): PostDTO[] {
-    return this.afriquePosts.filter(post => post.typeName === typeName && !post.archived).slice(0, 2);
+    return this.marocPosts.filter(post => post.typeName === typeName && !post.archived).slice(0, 2);
   }
 
   getFirstFourPostsByType(typeName: string): PostDTO[] {
-    return this.afriquePosts.filter(post => post.typeName === typeName && !post.archived).slice(0, 4);
+    return this.marocPosts.filter(post => post.typeName === typeName && !post.archived).slice(0, 4);
   }
 }
+
+

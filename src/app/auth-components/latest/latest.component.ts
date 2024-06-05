@@ -12,28 +12,37 @@ export class LatestComponent  implements OnInit{
   listOfTypes = []; // Remplir avec les types disponibles
   listOfCategories = []; // Remplir avec les catégories disponibles
 
-  constructor(private latestService: LatestService) { }
+
+
+  archivedPosts: PostDTO[] = [];
+  archivedPostsOfTypeFirst: PostDTO[] = []; // Ajout d'un tableau pour les posts archivés du type 'first'
+
+  
+
+
+
+
+
+
+
+  constructor(private latestService: LatestService) {}
 
   ngOnInit(): void {
-    this.getLatestPosts();
+    this.loadArchivedPostsByType('latest');
   }
 
-  getLatestPosts(): void {
-    this.latestService.getApprovedPostsByCategory('latest')
-      .subscribe(posts => {
-        this.latestPosts = posts.map(post => ({
-          ...post,
-          processedImg: 'data:image/jpeg;base64,' + post.byteImg
+  loadArchivedPostsByType(type: string): void {
+    this.latestService.getArchivedPostsByType(type).subscribe(archivedPosts => {
+        this.archivedPosts = archivedPosts.map(post => ({
+            ...post,
+            processedImg: this.processImage(post.byteImg)
         }));
-      });
+    });
+}
+
+  private processImage(base64Img: string): string {
+    return `data:image/jpeg;base64,${base64Img}`;
   }
-  getFirstThreePostsByType(typeName: string): PostDTO[] {
-    return this.latestPosts.filter(post => post.typeName === typeName).slice(0, 3);
-  }
-  getFirstByType(typeName: string): PostDTO[] {
-    return this.latestPosts.filter(post => post.typeName === typeName).slice(0, 1);
-  }
-  getFirstTwoPostsByType(typeName: string): PostDTO[] {
-    return this.latestPosts.filter(post => post.typeName === typeName).slice(0, 2);
-  }
+
+  
 }

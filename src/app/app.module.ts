@@ -8,8 +8,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSidenavContainer} from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
+import {MatCardModule} from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
-import {MatDivider} from '@angular/material/divider';
+import {MatDivider, MatDividerModule} from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import {  HttpClientModule } from '@angular/common/http';
 import { MarocComponent } from './auth-components/maroc/maroc.component';
@@ -21,6 +23,11 @@ import { AmeriqueComponent } from './auth-components/amerique/amerique.component
 import { LatestComponent } from './auth-components/latest/latest.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { FirstComponent } from './auth-components/first/first.component';
+import { TrendComponent } from './auth-components/trend/trend.component';
+import { ReportsComponent } from './auth-components/reports/reports.component';
+import { MainComponent } from './auth-components/main/main.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule, _MatInternalFormField } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +35,8 @@ import { FirstComponent } from './auth-components/first/first.component';
     AfriqueComponent,
     EuropeComponent,
     AsieComponent,
-    AmeriqueComponent,LatestComponent, PostDetailComponent,FirstComponent
+    AmeriqueComponent,LatestComponent, PostDetailComponent,FirstComponent,TrendComponent,ReportsComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
@@ -36,9 +44,23 @@ import { FirstComponent } from './auth-components/first/first.component';
      MatToolbarModule,
      MatIconModule,
      MatSidenavContainer,
-     MatSidenavModule
+     MatSidenavModule,    MatFormFieldModule,    MatDividerModule
+
+
+     
      ,MatDivider,CommonModule, RouterModule, BrowserModule,
-     HttpClientModule,MatToolbarModule,
+     HttpClientModule,MatCardModule,    FormsModule,
+     ReactiveFormsModule, MatIconModule,    MatCardModule,  BrowserModule,
+     FormsModule,
+     ReactiveFormsModule,
+     HttpClientModule,MatFormFieldModule
+    
+    
+    
+    
+
+
+
 
     ],
   providers: [
