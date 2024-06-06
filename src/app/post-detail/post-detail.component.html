@@ -1,3 +1,5 @@
+
+<div class=" body">
 <div *ngIf="post" class="post-detail">
     <h1>{{ post.name }}</h1>
     <div class="post-body">
@@ -5,7 +7,7 @@
         <img [src]="post.processedImg" alt="post-image">
       </div>
       <div class="post-content">
-        <p>{{ post.content }}</p>
+        <p style="font-size: 20px;">{{ post.content }}</p>
         <p>{{ post.text }}</p>
       </div>
     </div>
@@ -13,4 +15,4 @@
       <p>Posted by: {{ post.postedBy }} on {{ post.date | date }}</p>
     </div>
   </div>
-  
+</div>

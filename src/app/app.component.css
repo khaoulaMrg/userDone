@@ -9,7 +9,7 @@ mat-toolbar {
     top: 0; /* Aligne la barre d'outils en haut de la page */
     width: 100%; /* Prend toute la largeur de la page */
     z-index: 1000;
-    background-color: rgb(144, 194, 196);
+    background-color: #fbf4fb;
 
   }
 
@@ -18,13 +18,17 @@ mat-toolbar {
     display: flex;
     justify-content: center; /* Pour centrer les éléments horizontalement */
     align-items: center; /* Pour centrer les éléments verticalement */
-    gap: 30px; /* Ajoute un espacement de 20 pixels entre les éléments */
-  }
+    gap: 30px;
+    margin-left: auto; /* Déplace les éléments vers la droite */
+    padding-right: -100px; /* Ajoute un espacement de 20 pixels entre les éléments */
+}
+
   
   .nav-links a {
     margin-right: 10px;
     font-family: cursive; 
     font-size:25px;
+    color: rgb(147, 90, 133);
 
   }
   .nav-links a:hover {
@@ -68,6 +72,53 @@ mat-toolbar {
 .mat-sidenav {
     width: 250px; /* ou la largeur de votre choix */
     position: fixed;
+}
+
+
+/* Style for the sidenav */
+.sidenav {
+  width: 250px;
+  padding: 20px;
+  background-color: #fcfbfc;
+}
+
+/* Add padding-top to menu-list to avoid overlap with navbar */
+.menu-list {
+  list-style-type: none;
+  padding: 20px 0 0 0; /* Top padding to push the list down */
+  margin: 0;
+}
+
+/* Style for each menu item */
+.menu-item {
+  margin: 25px 0;
+  position: relative;
+  padding-left: 20px; /* Space for the bullet point */
+}
+
+.menu-item::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #007bff;
+  font-size: 1.5em;
+}
+
+/* Style for the links in the menu */
+.menu-item a {
+  text-decoration: none;
+  color: rgb(147, 90, 133);
+
+  font-size: 1em;
+  display: block;
+  transition: color 0.3s, font-size 0.3s;
+}
+
+/* Style for the active link */
+.menu-item a.active-link {
+  color: rgb(134, 74, 119);
+  font-size: 1.1em;
+  font-weight: bold;
 }
 
 

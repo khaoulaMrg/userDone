@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -94,5 +94,15 @@ receiveNewPost(): Observable<PostDTO> {
   }
 archivePost(postId: number): Observable<void> {
   return this.http.put<void>(`${this.SERVER_URL}posts/${postId}/archive`, {});
+}
+searchArchivedPosts(name: string, category: string): Observable<PostDTO[]> {
+  let params = new HttpParams();
+  if (name) {
+    params = params.set('name', name);
+  }
+  if (category) {
+    params = params.set('category', category);
+  }
+  return this.http.get<PostDTO[]>(`${this.SERVER_URL}archived/search`, { params });
 }
 }

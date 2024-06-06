@@ -1,8 +1,8 @@
 .post-detail {
-  border: 1px solid #ccc;
+  border: 1px solid #f0efef;
   padding: 20px;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: #ffffff;
   max-width: 800px;
   margin: 0 auto;
   margin-top: 50px; /* Center the post detail container */
@@ -10,6 +10,7 @@
 
 .post-detail h1 {
   text-align: center;
+color: rgb(97, 60, 86);
   font-size: 2em;
   margin-bottom: 20px;
 }
@@ -29,12 +30,19 @@
 
 .post-content {
   width: 100%;
-  text-align: center; /* Center the text content */
+  text-align: center; 
+  line-height: 1.6; /* Adjust line height for better readability */
+
 }
+
+
 
 .post-footer {
   margin-top: 20px;
   text-align: center;
   font-size: 0.9em;
   color: #777;
+}
+.body{
+  background-color: #faf8fa;
 }

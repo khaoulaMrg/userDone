@@ -11,6 +11,7 @@ import { ReportsService } from './reports-services/reports.service';
 export class ReportsComponent implements  OnInit {
   archivedPosts: PostDTO[] = [];
   archivedPostsOfTypeFirst: PostDTO[] = []; // Ajout d'un tableau pour les posts archivés du type 'first'
+  searchCriteria = { name: '', category: '' };
 
   constructor(private reporstService: ReportsService) {}
 
@@ -29,6 +30,16 @@ export class ReportsComponent implements  OnInit {
 
   private processImage(base64Img: string): string {
     return `data:image/jpeg;base64,${base64Img}`;
+  }
+
+  searchPosts(): void {
+    const { name, category } = this.searchCriteria;
+    this.reporstService.searchArchivedPosts(name, category).subscribe(archivedPosts => {
+      this.archivedPosts = archivedPosts.map(post => ({
+        ...post,
+        processedImg: this.processImage(post.byteImg ?? '')
+      }));
+    });
   }
   }
   // Autres méthodes...

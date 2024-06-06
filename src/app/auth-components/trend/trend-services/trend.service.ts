@@ -32,6 +32,6 @@ searchArchivedPosts(name: string, category: string): Observable<PostDTO[]> {
   if (category) {
     params = params.set('category', category);
   }
-  return this.http.get<PostDTO[]>(`${this.SERVER_URL}/archived/search`, { params });
+  return this.http.get<PostDTO[]>(`${this.SERVER_URL}archived/search`, { params });
 }
 }

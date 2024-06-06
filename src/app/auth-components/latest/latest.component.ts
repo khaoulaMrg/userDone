@@ -13,6 +13,7 @@ export class LatestComponent  implements OnInit{
   listOfCategories = []; // Remplir avec les catégories disponibles
 
 
+  searchCriteria = { name: '', category: '' };
 
   archivedPosts: PostDTO[] = [];
   archivedPostsOfTypeFirst: PostDTO[] = []; // Ajout d'un tableau pour les posts archivés du type 'first'
@@ -40,6 +41,15 @@ export class LatestComponent  implements OnInit{
     });
 }
 
+searchPosts(): void {
+  const { name, category } = this.searchCriteria;
+  this.latestService.searchArchivedPosts(name, category).subscribe(archivedPosts => {
+    this.archivedPosts = archivedPosts.map(post => ({
+      ...post,
+      processedImg: this.processImage(post.byteImg ?? '')
+    }));
+  });
+}
   private processImage(base64Img: string): string {
     return `data:image/jpeg;base64,${base64Img}`;
   }
